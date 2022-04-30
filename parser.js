@@ -1,3 +1,11 @@
+const operators = "+-/*%";
+
+const keywords = "let|const|set|for|while|until".split("|");
+
+const isOperator = v => operators.indexOf(v) >= 0;
+
+const isKeyword = v => keywords.indexOf(v) >= 0;
+
 const parse = tokens => {
     return tokens.map(token => {
         if(Array.isArray(token)) {

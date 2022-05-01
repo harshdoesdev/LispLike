@@ -1,46 +1,60 @@
 # LispLike
 A Tiny Lisp Like Language That Transpiles To JavaScript
 
-**Usage**
-```javascript
-import lispLike from '/path/to/lispLike/transpiler.js';
-
-const code = `
-(
-  (let $name "World")
-  
-  (defun say-hello ($name) (print (+ "Hello " $name "!")))
-  
-  (say-hello $name)
-)
-`;
-
-const jsCode = lispLike(code); // transpiles "lisp-like" code to JavaScript code
-```
-
-**Javascript Code**
-```javascript
-let name = "World"
-let sayHello = (name) => console.log("Hello "+name+"!")
-sayHello(name)
-```
-**Example 2:**
+**FizzBuzz Example Program**
 ```lisp
-(
-    (defun add-two-number ($n1 $n2)
-        (+
-            "Adds two numbers: "
-            ((+ $n1 $n2))
+(                                 ; All of the program should be enclosed within a single parenthesis or the "Global block"
+    (let $i 0)                    ; define a variable "i"
+    (while (<= $i 100)            ; loop while i is less than or equal to 100
+        (do
+            (let $out "")         ; define a local variable "out"
+            (if (=== (% $i 3) 0)  ; if i % 3 is equal to 0
+                (do
+                    (= out (+ $out "Fizz")) ; add Fizz to the string "out"
+                )
+            )
+            (if (=== (% $i 5) 0)  ; if i % 5 is equal to 0
+                (do
+                    (= out (+ $out "Buzz")) ; add Buzz to the string "out"
+                )
+            )
+            (if (!== $out "")
+                (do              ; if block
+                    (print $out) ; print fizz, buzz, or fizzbuzz
+                )
+                (                ; else block
+                    (print $i)   ; else print the number itself
+                )
+            )
+            (= $i (+ $i 1))      ; increment the value of variable i by 1
         )
     )
-    (print (add-two-number 10 20))
 )
 ```
-Output:
+
+**Transpiled Javascript Code**
+Proper indentation is maintained, just the comments have been removed
 ```javascript
-let addTwoNumber = (n1,n2) => "Adds two numbers: "+(n1+n2)
-console.log(addTwoNumber(10,20))
+let i = 0;
+
+while(i <= 100) {
+  let out = "";
+
+  if(i % 3 === 0) {
+    out = out + "Fizz"
+  }
+  if(i % 5 === 0) {
+    out = out + "Buzz"
+  }
+  if(out !== "") {
+    console.log(out)
+  } else {
+    console.log(i)
+  }
+  i = i + 1
+}
 ```
+
 **Data Types**
 * String
 * Number

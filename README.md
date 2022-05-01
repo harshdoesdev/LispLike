@@ -10,12 +10,12 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
             (let out "")         ; define a local variable "out"
             (if (=== (% i 3) 0)  ; if i % 3 is equal to 0
                 (do
-                    (= out (+ out "Fizz")) ; add Fizz to the string "out"
+                    (+= out "Fizz") ; add Fizz to the string "out"
                 )
             )
             (if (=== (% i 5) 0)  ; if i % 5 is equal to 0
                 (do
-                    (= out (+ out "Buzz")) ; add Buzz to the string "out"
+                    (+= out "Buzz") ; add Buzz to the string "out"
                 )
             )
             (if (!== out "")
@@ -26,7 +26,7 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
                     (print i)    ; else print the number itself
                 )
             )
-            (= i (+ i 1))       ; increment the value of variable i by 1
+            (+= i 1)       ; increment the value of variable i by 1
         )
     )
 )
@@ -67,7 +67,7 @@ const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
 **Data Types**
 * String
 * Number
-* List (Array)
+* Array
 * Null
 
 **Looping**

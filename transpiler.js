@@ -1,6 +1,3 @@
-import parse from "./parser.js";
-import tokenize from "./tokenizer.js";
-
 const transpileLet = (identifier, ...values) => {
     return `let ${identifier.value} = ${transpile(values)}`;
 };
@@ -21,6 +18,14 @@ const transpileFn = (identifier, parameters, ...rest) => {
     return `let ${identifier.value} = (${transpile(parameters).join(",")}) => ${transpile(rest).join("")}`;
 };
 
+const transpileDoBlock = rest => {
+    return transpile(rest).join("");
+};
+
+const transpileEachOf = (list, x, ...doBlock) => {
+    return `${(Array.isArray(list) ? transpileList(list.slice(1)) : list.value)}.forEach(${x.value} => {\n${transpile(doBlock).join(";\n")}\n})`;
+};
+
 const transpile = ast => {
     return ast.map(curr => {
         if(Array.isArray(curr)) {
@@ -37,6 +42,10 @@ const transpile = ast => {
                                 return transpileList(rest);
                             case "defun":
                                 return transpileFn(...rest);
+                            case "forEach":
+                                return transpileEachOf(...rest);
+                            case "do":
+                                return transpileDoBlock(rest);
                         }
                     break;
                     case "identifier":
@@ -46,7 +55,6 @@ const transpile = ast => {
                             default:
                                 return `${op.value}(${transpile(rest).join(",")})`
                         }
-                    break;
                     case "operator":
                         return transpileMath(op.value, rest);
                 }
@@ -64,9 +72,7 @@ const transpile = ast => {
     });
 };
 
-const lispLike = code => {
+const lisp = code => {
     const ast = parse(tokenize(code));
     return transpile(ast).join("\n");
 };
-
-export default lispLike;

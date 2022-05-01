@@ -41,6 +41,19 @@ Output:
 let addTwoNumber = (n1,n2) => "Adds two numbers: "+(n1+n2)
 console.log(addTwoNumber(10,20))
 ```
+**Data Types**
+* String
+* Number
+* List (Array)
+* Null
+
+**Looping**
+* For-each loop
+* While loop
+
+**Conditionals**
+* If statement
+* If-else statement
 
 **Todo**
 * Improve this toy transipler

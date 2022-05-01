@@ -19,14 +19,14 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
                 )
             )
             (if (!== $out "")
-                (do              ; if block
-                    (print $out) ; print fizz, buzz, or fizzbuzz
+                (do               ; if block
+                    (print $out)  ; print fizz, buzz, or fizzbuzz
                 )
-                (                ; else block
-                    (print $i)   ; else print the number itself
+                (                 ; else block
+                    (print $i)    ; else print the number itself
                 )
             )
-            (= $i (+ $i 1))      ; increment the value of variable i by 1
+            (= $i (+ $i 1))       ; increment the value of variable i by 1
         )
     )
 )

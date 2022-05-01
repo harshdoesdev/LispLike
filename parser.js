@@ -1,6 +1,6 @@
 const operators = ["+","-","/","*","%","<",">","&&",">=","<=","==", "===","||","!=","!==","=","+=","-=","/=","*="];
 
-const keywords = "let|loop|map|array|defun|do|eldo|if|while|return".split("|");
+const keywords = "let|loop|map|array|defun|do|if|while|return|new".split("|");
 
 const isOperator = v => operators.indexOf(v) >= 0;
 

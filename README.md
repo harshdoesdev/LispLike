@@ -45,5 +45,5 @@ console.log(addTwoNumber(10,20))
 **Todo**
 * Improve this toy transipler
 * Add error reporting
-* Add loops
-* Add conditionals
+* ~~Add loops~~ ADDED LOOPS
+* ~~Add conditionals~~ ADDED CONDITIONALS

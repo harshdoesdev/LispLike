@@ -19,7 +19,7 @@ const transpileFn = (identifier, parameters, ...rest) => {
 };
 
 const transpileDoBlock = rest => {
-    return transpile(rest).join("");
+    return transpile(rest).join(";\n");
 };
 
 const transpileEachOf = (list, x, ...doBlock) => {

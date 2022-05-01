@@ -27,7 +27,7 @@ const tokenize = v => {
             
             if(curr === "\\") {
                 escape = true;
-            } else if((curr === "n" || curr === "t") && sopen && escape) {
+            } else if((curr === "n" || curr === "t" || curr === "s") && sopen && escape) {
                 str += `\\${curr}`;
                 escape = false;
             } else if(curr === '"') {
@@ -40,6 +40,7 @@ const tokenize = v => {
                         block.push(str);
                         str = '';
                         sopen = false;
+                        escape = false;
                     } else {
                         sopen = true;
                         str += '"';

@@ -96,10 +96,6 @@ const transpile = (block, ast) => {
         }
 
         switch(curr.type) {
-            case "variable":
-                return curr.value;
-            case "string":
-                return `"${curr.value}"`;
             case "null":
                 return "null";
             default:

@@ -55,6 +55,15 @@ while(i <= 100) {
 }
 ```
 
+**USAGE**
+```javascript
+import lispLike from './path/to/lispLike/transipler.js';
+
+const code = '((print "hello world!"))';
+
+const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
+```
+
 **Data Types**
 * String
 * Number

@@ -69,6 +69,7 @@ const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
 * Number
 * Array
 * Null
+* Functions
 
 **Looping**
 * For-each loop

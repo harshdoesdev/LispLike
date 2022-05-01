@@ -1,6 +1,6 @@
-const operators = "+-/*%";
+const operators = ["+","-","/","*","%","<",">","&&",">=","<=","==", "===","||","!=","!==","="];
 
-const keywords = "let|const|for-each|list|defun|do".split("|");
+const keywords = "let|for-each|list|defun|do|eldo|if|while".split("|");
 
 const isOperator = v => operators.indexOf(v) >= 0;
 
@@ -16,7 +16,10 @@ const parse = tokens => {
         if(Array.isArray(token)) {
             return parse(token);
         } else if(token === "null") {
-            return null;
+            return {
+                type: "null",
+                return: null
+            };
         } else if(!isNaN(token)) {
             return {
                 type: "number",

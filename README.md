@@ -80,7 +80,7 @@ const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
 * If-else statement
 
 **Todo**
-* Improve this toy transipler
+* Improve this toy transpiler
 * Add error reporting
 * ~~Add loops~~ ADDED LOOPS
 * ~~Add conditionals~~ ADDED CONDITIONALS

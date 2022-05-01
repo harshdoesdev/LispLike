@@ -24,3 +24,20 @@ let name = "World"
 let sayHello = (name) => console.log("Hello "+name+"!")
 sayHello(name)
 ```
+**Example 2:**
+```lisp
+(
+    (defun add-two-number (n1 n2)
+        (+
+            "Adds two numbers: "
+            ((+ n1 n2))
+        )
+    )
+    (print (add-two-number 10 20))
+)
+```
+Output:
+```javascript
+let addTwoNumber = (n1,n2) => "Adds two numbers: "+(n1+n2)
+console.log(addTwoNumber(10,20))
+```

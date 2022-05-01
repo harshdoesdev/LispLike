@@ -14,9 +14,15 @@ const transpilePrint = (block, values) => {
     return blockify(block, `console.log(${transpile(block, values).join(",")})`);
 };
 
+const transpilePrintError = (block, values) => {
+    return blockify(block, `console.error(${transpile(block, values).join(",")})`);
+};
+
 const transpileBinaryOp = (block, op, values) => {
     if(op === "=") {
         return transpileSetStmt(block, ...values);
+    } else if(op === "+=" || op === "-=" || op === "/=" || op === "*=") {
+        return blockify(block, transpile(0, values).join(` ${op} `));
     }
     return transpile(0, values).join(` ${op} `);
 };
@@ -26,15 +32,15 @@ const transpileList = (values) => {
 };
 
 const transpileFn = (block, identifier, parameters, ...rest) => {
-    return blockify(block, `let ${identifier.value} = (${transpile(0, parameters).join(",")}) => ${transpile(0, rest).join("")}`);
+    return blockify(block, `function ${identifier.value} (${transpile(0, parameters).join(",")}) {\n${transpileDoBlock(block, rest)}\n}\n`);
 };
 
 const transpileDoBlock = (block, rest) => {
     return transpile(block + 1, rest).join("\n");
 };
 
-const transpileEachOf = (block, x, list, doBlock) => {
-    return blockify(block, `${(Array.isArray(list) ? transpileList(list.slice(1)) : list.value)}.forEach(${x.value} => {\n${transpile(block, [doBlock]).join(";\n")}\n${blockify(block, "})")}`);
+const transpileEachOf = (block, list, [key, val], doBlock) => {
+    return blockify(block, `${(Array.isArray(list) ? transpileList(list.slice(1)) : list.value)}.forEach((${val.value}, ${key.value}) => {\n${transpile(block, [doBlock]).join(";\n")}\n${blockify(block, "})")}`);
 };
 
 const transpileCondition = condition => {
@@ -58,6 +64,10 @@ const transpileWhileLoop = (block, condition, doBlock) => {
     return blockify(block, `while(${transpileCondition(condition)}) {\n${transpile(block, [doBlock]).join(";\n")}\n${blockify(block, "}")}`);
 };
 
+const transpileReturnStmt = (block, rest) => {
+    return blockify(block, `return ${transpile(0, rest).join(",")}`);
+};
+
 const transpile = (block, ast) => {
     return ast.map(curr => {
         if(Array.isArray(curr)) {
@@ -72,9 +82,9 @@ const transpile = (block, ast) => {
                                 return transpileLet(block, ...rest);
                             case "array":
                                 return transpileList(rest);
-                            case "func":
+                            case "defun":
                                 return transpileFn(block, ...rest);
-                            case "each":
+                            case "loop":
                                 return transpileEachOf(block, ...rest);
                             case "while":
                                 return transpileWhileLoop(block, ...rest);
@@ -82,12 +92,16 @@ const transpile = (block, ast) => {
                                 return transpileDoBlock(block, rest);
                             case "if":
                                 return transpileIfStmt(block, ...rest);
+                            case "return":
+                                return transpileReturnStmt(block, rest);
                         }
                     break;
                     case "identifier":
                         switch(op.value) {
                             case "print":
                                 return transpilePrint(block, rest);
+                            case "error":
+                                return transpilePrintError(block, rest);
                             default:
                                 return `${op.value}(${transpile(block, rest).join(",")})`
                         }

@@ -1,6 +1,6 @@
 const operators = "+-/*%";
 
-const keywords = "let|const|set|for|while|until|if|else|or|and|list|defun".split("|");
+const keywords = "let|const|for-each|list|defun|do".split("|");
 
 const isOperator = v => operators.indexOf(v) >= 0;
 

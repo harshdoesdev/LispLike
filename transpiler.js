@@ -6,7 +6,8 @@ const TAB_LENGTH = 2;
 const blockify = (n, v) => `${" ".repeat(TAB_LENGTH).repeat(n)}${v}`;
 
 const transpileLet = (block, identifier, ...values) => {
-    return blockify(block, `let ${identifier.value} = ${transpile(0, values)};\n`);
+    const value = transpile(0, values);
+    return blockify(block, `let ${identifier.value} = ${!value.length ? null : value}\n`);
 };
 
 const transpilePrint = (block, values) => {
@@ -32,8 +33,8 @@ const transpileDoBlock = (block, rest) => {
     return transpile(block + 1, rest).join("\n");
 };
 
-const transpileEachOf = (block, list, x, doBlock) => {
-    return blockify(block, `${(Array.isArray(list) ? transpileList(list.slice(1)) : list.value)}.forEach(${x.value} => {\n${transpile(block, [doBlock]).join(";\n")}\n${blockify(block, "});")}`);
+const transpileEachOf = (block, x, list, doBlock) => {
+    return blockify(block, `${(Array.isArray(list) ? transpileList(list.slice(1)) : list.value)}.forEach(${x.value} => {\n${transpile(block, [doBlock]).join(";\n")}\n${blockify(block, "})")}`);
 };
 
 const transpileCondition = condition => {
@@ -49,7 +50,8 @@ const transpileIfStmt = (block, condition, doBlock, elseBlock) => {
 };
 
 const transpileSetStmt = (block, identifier, ...values) => {
-    return blockify(block, `${identifier.value} = ${transpile(block, values).join("")}`);
+    const value = transpile(block, values).join("");
+    return blockify(block, `${identifier.value} = ${!value ? null : value}`);
 };
 
 const transpileWhileLoop = (block, condition, doBlock) => {
@@ -68,11 +70,11 @@ const transpile = (block, ast) => {
                         switch(op.value) {
                             case "let":
                                 return transpileLet(block, ...rest);
-                            case "list":
+                            case "array":
                                 return transpileList(rest);
-                            case "defun":
+                            case "func":
                                 return transpileFn(block, ...rest);
-                            case "forEach":
+                            case "each":
                                 return transpileEachOf(block, ...rest);
                             case "while":
                                 return transpileWhileLoop(block, ...rest);

@@ -4,29 +4,29 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
 **FizzBuzz Example Program**
 ```lisp
 (                                 ; All of the program should be enclosed within a single parenthesis or the "Global block"
-    (let $i 0)                    ; define a variable "i"
-    (while (<= $i 100)            ; loop while i is less than or equal to 100
+    (let i 0)                    ; define a variable "i"
+    (while (<= i 100)            ; loop while i is less than or equal to 100
         (do
-            (let $out "")         ; define a local variable "out"
-            (if (=== (% $i 3) 0)  ; if i % 3 is equal to 0
+            (let out "")         ; define a local variable "out"
+            (if (=== (% i 3) 0)  ; if i % 3 is equal to 0
                 (do
-                    (= out (+ $out "Fizz")) ; add Fizz to the string "out"
+                    (= out (+ out "Fizz")) ; add Fizz to the string "out"
                 )
             )
-            (if (=== (% $i 5) 0)  ; if i % 5 is equal to 0
+            (if (=== (% i 5) 0)  ; if i % 5 is equal to 0
                 (do
-                    (= out (+ $out "Buzz")) ; add Buzz to the string "out"
+                    (= out (+ out "Buzz")) ; add Buzz to the string "out"
                 )
             )
-            (if (!== $out "")
+            (if (!== out "")
                 (do               ; if block
-                    (print $out)  ; print fizz, buzz, or fizzbuzz
+                    (print out)  ; print fizz, buzz, or fizzbuzz
                 )
                 (                 ; else block
-                    (print $i)    ; else print the number itself
+                    (print i)    ; else print the number itself
                 )
             )
-            (= $i (+ $i 1))       ; increment the value of variable i by 1
+            (= i (+ i 1))       ; increment the value of variable i by 1
         )
     )
 )

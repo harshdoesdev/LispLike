@@ -32,7 +32,14 @@ const transpileList = (values) => {
 };
 
 const transpileFn = (block, identifier, parameters, ...rest) => {
-    return blockify(block, `function ${identifier.value} (${transpile(0, parameters).join(",")}) {\n${transpileDoBlock(block, rest)}\n}\n`);
+    let fnName = "";
+    if(Array.isArray(identifier)) {
+        rest = [[...parameters, ...rest]];
+        parameters = identifier;
+    } else {
+        fnName = identifier.value;
+    }
+    return blockify(block, `function${fnName ? ` ${fnName} ` : ''}(${transpile(0, parameters).join(",")}) {\n${transpileDoBlock(block, rest)}\n}\n`);
 };
 
 const transpileDoBlock = (block, rest) => {

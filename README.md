@@ -3,7 +3,7 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
 
 **Usage**
 ```javascript
-import lispLike from '/path/to/lispLike.js';
+import lispLike from '/path/to/lispLike/transpiler.js';
 
 const code = `
 (

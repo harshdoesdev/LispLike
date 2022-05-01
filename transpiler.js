@@ -105,7 +105,9 @@ const transpile = (block, ast) => {
     });
 };
 
-const lisp = code => {
+const lispLike = code => {
     const ast = parse(tokenize(code));
     return transpile(0, ast).join("\n");
 };
+
+export default lispLike;

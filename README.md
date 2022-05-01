@@ -84,3 +84,80 @@ const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
 * Add error reporting
 * ~~Add loops~~ ADDED LOOPS
 * ~~Add conditionals~~ ADDED CONDITIONALS
+
+**Examples**
+
+**OOP Example**
+
+```lisp
+(
+    (defun Person (name age) (do
+        (= this.name name)
+        (= this.age age)
+        (let that this)
+
+        (= this.greet 
+            (defun (name) (do
+                (print 
+                    (+ "Hello " (name.toUpperCase) ", I am " that.name "!"))))))
+
+        (if (< this.age 18) 
+            (do
+                (print "You are under 18.")
+            )
+            (
+                (print "You are above 18.")
+            )
+        )
+
+        (= this.count (defun (n) (do
+            (let i 1)
+            (while (<= i n) (do
+                (print i)
+                (+= i 1)
+            ))
+        )))
+
+        (print "Object Initialized!")
+    )
+
+    (let john (new Person ("John Doe" 22)))
+
+    (john.greet "World")
+
+    (john.count 10)
+)
+```
+**JS output**
+```javascript
+function Person (name,age) {
+    this.name = name
+    this.age = age
+    let that = this
+
+    this.greet = function(name) {
+        console.log("Hello " + name.toUpperCase() + ", I am " + that.name + "!")
+    }
+
+  if(this.age < 18) {
+    console.log("You are under 18.")
+  } else {
+    console.log("You are above 18.")
+  }
+  this.count = function(n) {
+      let i = 1
+
+      while(i <= n) {
+        console.log(i)
+        i += 1
+      }
+  }
+
+  console.log("Object Initialized!")
+}
+
+let john = new Person("John Doe",22)
+
+john.greet("World")
+john.count(10)
+```

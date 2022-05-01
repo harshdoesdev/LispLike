@@ -95,12 +95,7 @@ const transpile = (block, ast) => {
             }
         }
 
-        switch(curr.type) {
-            case "null":
-                return "null";
-            default:
-                return curr.value;
-        }
+        return curr.value;
     
     });
 };

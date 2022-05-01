@@ -10,7 +10,8 @@ const tokenize = v => {
         sopen = false, // boolean to check if an string is open
         str = "", // temporary variable to hold characters of an string
         op = "", // temporary variable to hold characters of an op/function
-        copen = false; // boolean to skip comments when detected
+        copen = false,
+        escape = false; // boolean to skip comments when detected
 
     const stack = [];
 
@@ -23,13 +24,26 @@ const tokenize = v => {
         } else if(copen && curr === '\n') {
             copen = false;
         } else if(!copen) {
-            if(curr === '"') {
-                if(sopen) {
-                    block.push(str);
-                    str = '';
-                    sopen = false;
+            
+            if(curr === "\\") {
+                escape = true;
+            } else if((curr === "n" || curr === "t") && sopen && escape) {
+                str += `\\${curr}`;
+                escape = false;
+            } else if(curr === '"') {
+                if(escape) {
+                    escape = false;
+                    str += '\\"';
                 } else {
-                    sopen = true;
+                    if(sopen) {
+                        str += '"';
+                        block.push(str);
+                        str = '';
+                        sopen = false;
+                    } else {
+                        sopen = true;
+                        str += '"';
+                    }
                 }
             } else if(curr === "(" && !sopen) {
                 if(block) {
@@ -51,7 +65,7 @@ const tokenize = v => {
                     parent.push(block);
                     block = parent;
                 }
-            } else if(/\s+/.test(curr) && !sopen) {
+            } else if(/\s+/.test(curr) && !sopen && !copen) {
                 if(curr === " ") {
                     if(op.length) {
                         block.push(op);

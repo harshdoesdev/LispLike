@@ -18,7 +18,7 @@ const code = `
 const jsCode = lispLike(code); // transpiles "lisp-like" code to JavaScript code
 ```
 
-**Javascript Output**
+**Javascript Code**
 ```javascript
 let name = "World"
 let sayHello = (name) => console.log("Hello "+name+"!")

@@ -18,7 +18,7 @@ const parse = tokens => {
         } else if(token === "null") {
             return {
                 type: "null",
-                return: null
+                return: "null"
             };
         } else if(!isNaN(token)) {
             return {
@@ -35,11 +35,6 @@ const parse = tokens => {
                 type: "operator",
                 value: token
             }
-        } else if(token[0] === "$") {
-            return {
-                type: "variable",
-                value: kebabToCamelCase(token.substring(1))
-            }
         } else if(isKeyword(token)) {
             return {
                 type: "keyword",
@@ -48,7 +43,7 @@ const parse = tokens => {
         } else if(token[0] === '"') {
             return {
                 type: "string",
-                value: token.substring(1, token.length - 1)
+                value: token
             }
         } else {
             return {

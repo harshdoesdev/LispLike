@@ -1,10 +1,15 @@
 const operators = "+-/*%";
 
-const keywords = "let|const|set|for|while|until".split("|");
+const keywords = "let|const|set|for|while|until|if|else|or|and|list|defun".split("|");
 
 const isOperator = v => operators.indexOf(v) >= 0;
 
 const isKeyword = v => keywords.indexOf(v) >= 0;
+
+const kebabToCamelCase = v => {
+    const [a, ...rest] = v.split("-");
+    return a + rest.map(x => x.substring(0,1).toUpperCase() + x.substring(1)).join("");
+};
 
 const parse = tokens => {
     return tokens.map(token => {
@@ -30,12 +35,12 @@ const parse = tokens => {
         } else if(token[0] === "$") {
             return {
                 type: "variable",
-                value: token.substring(1)
+                value: kebabToCamelCase(token.substring(1))
             }
         } else if(isKeyword(token)) {
             return {
                 type: "keyword",
-                value: token
+                value: kebabToCamelCase(token)
             }
         } else if(token[0] === '"') {
             return {
@@ -44,8 +49,8 @@ const parse = tokens => {
             }
         } else {
             return {
-                type: "method",
-                value: token
+                type: "identifier",
+                value: kebabToCamelCase(token)
             }
         }
     });

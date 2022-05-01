@@ -41,3 +41,9 @@ Output:
 let addTwoNumber = (n1,n2) => "Adds two numbers: "+(n1+n2)
 console.log(addTwoNumber(10,20))
 ```
+
+**Todo**
+* Improve this toy transipler
+* Add error reporting
+* Add loops
+* Add conditionals

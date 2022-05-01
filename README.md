@@ -3,7 +3,7 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
 
 **FizzBuzz Example Program**
 ```lisp
-(                                 ; All of the program should be enclosed within a single parenthesis or the "Global block"
+(                                ; All of the program should be enclosed within a single parenthesis or the "Global block"
     (let i 0)                    ; define a variable "i"
     (while (<= i 100)            ; loop while i is less than or equal to 100
         (do
@@ -19,14 +19,14 @@ A Tiny Lisp Like Language That Transpiles To JavaScript
                 )
             )
             (if (!== out "")
-                (do               ; if block
+                (do              ; if block
                     (print out)  ; print fizz, buzz, or fizzbuzz
                 )
-                (                 ; else block
+                (                ; else block
                     (print i)    ; else print the number itself
                 )
             )
-            (+= i 1)       ; increment the value of variable i by 1
+            (+= i 1)             ; increment the value of variable i by 1
         )
     )
 )

@@ -39,7 +39,10 @@ const transpileFn = (block, identifier, parameters, ...rest) => {
     } else {
         fnName = identifier.value;
     }
-    return blockify(block, `function${fnName ? ` ${fnName} ` : ''}(${transpile(0, parameters).join(",")}) {\n${transpileDoBlock(block, rest)}\n}\n`);
+    return blockify(
+        fnName ? block : 0, 
+        `function${fnName ? ` ${fnName} ` : ''}(${transpile(0, parameters).join(",")}) {\n${transpileDoBlock(block, rest)}\n${blockify(block, "}")}\n`
+    );
 };
 
 const transpileDoBlock = (block, rest) => {
@@ -75,6 +78,10 @@ const transpileReturnStmt = (block, rest) => {
     return blockify(block, `return ${transpile(0, rest).join(",")}`);
 };
 
+const transpileInitStmt = (block, clsName, args) => {
+    return blockify(block, `new ${clsName.value}(${transpile(0, args).join(",")})`);
+};
+
 const transpile = (block, ast) => {
     return ast.map(curr => {
         if(Array.isArray(curr)) {
@@ -101,6 +108,8 @@ const transpile = (block, ast) => {
                                 return transpileIfStmt(block, ...rest);
                             case "return":
                                 return transpileReturnStmt(block, rest);
+                            case "new":
+                                return transpileInitStmt(block, ...rest);
                         }
                     break;
                     case "identifier":

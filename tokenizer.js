@@ -75,7 +75,7 @@ const tokenize = v => {
                 }
             } else {
                 if(sopen) {
-                    str += curr;
+                    str += curr === "\n" ? "\\n" : curr;
                 } else {
                     op += curr;
                 }

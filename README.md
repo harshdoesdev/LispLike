@@ -84,6 +84,7 @@ const jsCode = lispLike(code); // OUTPUT: console.log("hello world")
 **Todo**
 * Improve this toy transpiler
 * Add error reporting
+* ~~Multiline String~~ ADDED
 * ~~Add loops~~ ADDED LOOPS
 * ~~Add conditionals~~ ADDED CONDITIONALS
 

@@ -1,6 +1,3 @@
-import parse from "./parser.js";
-import tokenize from "./tokenizer.js";
-
 const TAB_LENGTH = 2;
 
 const blockify = (n, v) => `${" ".repeat(TAB_LENGTH).repeat(n)}${v}`;
@@ -83,8 +80,13 @@ const transpileInitStmt = (block, clsName, args) => {
 };
 
 const transpileImportStmt = rest => {
-    const [names, file] = rest;
-    return `import ${names.length === 1 ? names[0].value : `{${names.map(({ value }) => value).join(',')}}`} from ${file.value}\n`;
+    if(rest.length > 2) {
+        const [_, name, file] = rest;
+        return `import * as ${name.value} from ${file.value}\n`;
+    } else {
+        const [names, file] = rest;
+        return `import ${Array.isArray(names) ? `{${names.map(({ value }) => value).join(',')}}` : names.value} from ${file.value}\n`;
+    }
 };
 
 const transpileExportStmt = rest => {
@@ -147,10 +149,3 @@ const transpile = (block, ast) => {
     
     });
 };
-
-const lispLike = code => {
-    const ast = parse(tokenize(code));
-    return transpile(0, ast).join("\n");
-};
-
-export default lispLike;

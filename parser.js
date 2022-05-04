@@ -18,7 +18,7 @@ const parse = tokens => {
         } else if(token === "null") {
             return {
                 type: "null",
-                return: "null"
+                value: "null"
             };
         } else if(!isNaN(token)) {
             return {

@@ -82,6 +82,15 @@ const transpileInitStmt = (block, clsName, args) => {
     return blockify(block, `new ${clsName.value}(${transpile(0, args).join(",")})`);
 };
 
+const transpileImportStmt = rest => {
+    const [names, file] = rest;
+    return `import ${names.length === 1 ? names[0].value : `{${names.map(({ value }) => value).join(',')}}`} from ${file.value}\n`;
+};
+
+const transpileExportStmt = rest => {
+    return `export ${(rest.length === 2 && rest[0].value === "default") ? `default ${transpile(0, [rest[1]]).join('')}` : `{${rest[0].map(({ value }) => value).join(",")}}`}`;
+};
+
 const transpile = (block, ast) => {
     return ast.map(curr => {
         if(Array.isArray(curr)) {
@@ -89,6 +98,9 @@ const transpile = (block, ast) => {
                 return `(${transpile(block, curr).join("")})`;
             } else {
                 const [op, ...rest] = curr;
+                if(!op) {
+                    return;
+                }
                 switch(op.type) {
                     case "keyword":
                         switch(op.value) {
@@ -110,6 +122,10 @@ const transpile = (block, ast) => {
                                 return transpileReturnStmt(block, rest);
                             case "new":
                                 return transpileInitStmt(block, ...rest);
+                            case "import":
+                                return transpileImportStmt(rest);
+                            case "export":
+                                return transpileExportStmt(rest);
                         }
                     break;
                     case "identifier":

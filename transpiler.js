@@ -1,3 +1,6 @@
+import parse from "./parser.js";
+import tokenize from "./tokenizer.js";
+
 const TAB_LENGTH = 2;
 
 const blockify = (n, v) => `${" ".repeat(TAB_LENGTH).repeat(n)}${v}`;
@@ -149,3 +152,10 @@ const transpile = (block, ast) => {
     
     });
 };
+
+const lispLike = code => {
+    const ast = parse(tokenize(code));
+    return transpile(0, ast).join("\n");
+};
+
+export default lispLike;
